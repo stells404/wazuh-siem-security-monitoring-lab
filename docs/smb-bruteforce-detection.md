@@ -109,3 +109,48 @@ Windows Event ID 4740
 Wazuh collection and detection
 ```
 The Event ID sequence is documented from the laboratory exercise and presentation evidence. Original Event Viewer screenshots for Events 4625 and 4740 are not included in the public repository.
+## 4. Wazuh Detection & Correlation
+
+The Windows authentication events were collected by the Wazuh agent and processed by the Wazuh detection engine.
+
+Wazuh identified individual authentication failures as well as the resulting account lockout and repeated-failure pattern.
+
+### Detection Rules
+
+The documented Wazuh rules associated with the activity were:
+
+| Rule ID | Severity | Detection |
+|---|---:|---|
+| 60122 | Level 5 | Logon failure — unknown user or bad password |
+| 60115 | Level 9 | User account locked out |
+| 60204 | Level 10 | Multiple Windows logon failures / correlation |
+
+### Dashboard Results
+
+The Wazuh dashboard documented:
+
+```text
+Authentication Failures: 15
+Authentication Successes: 0
+```
+The alert activity included rules 60122, 60115, and 60204.
+This demonstrated that Wazuh was able to detect both individual failed authentication events and the broader repeated-failure pattern.
+
+### Detection Sequence
+```
+Windows Event ID 4625
+        ↓
+Wazuh event collection
+        ↓
+Rule 60122 — Logon failure
+        ↓
+Repeated authentication failures
+        ↓
+Rule 60204 — Multiple failures / correlation
+        ↓
+Account lockout
+        ↓
+Rule 60115 — Account locked out
+        ↓
+Wazuh security alert
+```
