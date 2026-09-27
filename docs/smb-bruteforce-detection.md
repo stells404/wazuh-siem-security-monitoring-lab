@@ -31,3 +31,11 @@ The reconnaissance identified:
 
 ```text
 TCP/445 — Microsoft-DS / SMB
+```
+
+The reconnaissance confirmed that SMB was exposed on TCP/445 on the Windows target.
+
+This established that SMB was available as the authentication service for the subsequent controlled testing.
+
+The actual laboratory IP address has been intentionally omitted from this public documentation.
+
