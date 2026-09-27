@@ -37,7 +37,15 @@ The reconnaissance confirmed that SMB was exposed on TCP/445 on the Windows targ
 
 This established that SMB was available as the authentication service for the subsequent controlled testing.
 
-The actual laboratory IP address has been intentionally omitted from this public documentation.
+**Sanitized Documentation Address**
+
+The Windows endpoint is represented in this public documentation as:
+
+```text
+192.0.2.20
+```
+`192.0.2.20` is a documentation-only address used to represent the Windows endpoint in this public repository. It was not the actual IP address used during the laboratory exercise.
+
 
 ## 2. SMB Authentication Testing
 
