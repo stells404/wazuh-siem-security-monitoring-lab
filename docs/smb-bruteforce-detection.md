@@ -59,3 +59,17 @@ The authentication attempts were intentionally conducted within the isolated lab
 
 No real-world systems or credentials were involved in the exercise.
 
+### Controlled Authentication Attempts
+
+The SMB authentication test was performed from the Kali Linux endpoint against the Windows target using NetExec.
+
+The original laboratory command is not reproduced here because it contained environment-specific addressing and a test username. The following sanitized representation illustrates the command structure used during the exercise:
+
+```bash
+netexec smb 192.0.2.20 -u lab-user -p [REDACTED]
+```
+The address and username shown above are sanitized documentation values and were not the original values used during testing.
+
+The authentication test was executed repeatedly to generate a sequence of failed SMB authentication events. The first attempt produced a logon failure, while subsequent attempts resulted in account lockout after repeated authentication failures.
+
+The testing remained within the isolated laboratory environment and was performed against the designated Windows endpoint.
