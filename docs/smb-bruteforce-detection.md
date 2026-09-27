@@ -39,3 +39,15 @@ This established that SMB was available as the authentication service for the su
 
 The actual laboratory IP address has been intentionally omitted from this public documentation.
 
+## 2. SMB Authentication Testing
+
+The reconnaissance phase established that SMB was available on the Windows target through TCP/445.
+
+Because the Windows 10 Home endpoint did not provide the RDP service required for the planned remote-access approach, SMB was selected for the controlled authentication test.
+
+An initial Hydra-based approach was attempted but was not successful in this lab environment. The testing was subsequently performed using NetExec against the SMB service.
+
+The authentication attempts were intentionally conducted within the isolated laboratory environment to generate Windows authentication telemetry for Wazuh monitoring.
+
+No real-world systems or credentials were involved in the exercise.
+
