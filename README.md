@@ -199,3 +199,36 @@ The deployment followed this model:
 ### Kali Linux Agent
 
 ### Agent Verification
+
+---
+
+## File Integrity Monitoring (FIM)
+
+File Integrity Monitoring was used to demonstrate Wazuh's ability to detect changes to files on the monitored Windows endpoint.
+
+The exercise used Wazuh's `syscheck` component to monitor a designated directory. Controlled file operations were then performed to generate different types of file-integrity events.
+
+### FIM Objective
+
+The objective was to verify that Wazuh could detect and report:
+
+- File creation
+- File modification
+- File deletion
+
+### FIM Detection Workflow
+
+```text
+Monitored Directory
+        ↓
+File Activity
+        ↓
+Wazuh Syscheck
+        ↓
+Integrity Monitoring
+        ↓
+Security Event
+        ↓
+Wazuh Detection
+        ↓
+Dashboard Alert
