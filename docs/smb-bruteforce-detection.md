@@ -69,7 +69,43 @@ The original laboratory command is not reproduced here because it contained envi
 netexec smb 192.0.2.20 -u lab-user -p [REDACTED]
 ```
 The address and username shown above are sanitized documentation values and were not the original values used during testing.
+## 3. Windows Security Telemetry
 
-The authentication test was executed repeatedly to generate a sequence of failed SMB authentication events. The first attempt produced a logon failure, while subsequent attempts resulted in account lockout after repeated authentication failures.
+The repeated SMB authentication attempts generated Windows security telemetry on the target endpoint.
 
-The testing remained within the isolated laboratory environment and was performed against the designated Windows endpoint.
+### Event ID 4625 — Failed Logon
+
+Windows Event ID 4625 was generated for failed authentication attempts.
+
+Each unsuccessful authentication attempt contributed to the sequence of Windows security events observed during the controlled testing.
+
+The exercise demonstrated how repeated authentication failures can generate endpoint telemetry that can subsequently be collected and analyzed by Wazuh.
+
+### Event ID 4740 — Account Lockout
+
+After repeated authentication failures, the test account became locked out.
+
+Windows Event ID 4740 was generated when the account lockout occurred.
+
+This provided an additional security event indicating that the repeated authentication attempts had triggered a defensive control on the Windows endpoint.
+
+### Telemetry Sequence
+
+The documented sequence was:
+
+```text
+SMB authentication attempt
+        ↓
+Failed authentication
+        ↓
+Windows Event ID 4625
+        ↓
+Repeated authentication failures
+        ↓
+Account lockout
+        ↓
+Windows Event ID 4740
+        ↓
+Wazuh collection and detection
+```
+The Event ID sequence is documented from the laboratory exercise and presentation evidence. Original Event Viewer screenshots for Events 4625 and 4740 are not included in the public repository.
