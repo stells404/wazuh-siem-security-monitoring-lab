@@ -166,3 +166,36 @@ Windows Event ID 4740
 Wazuh Detection & Correlation
         ↓
 Security Alert
+```
+
+---
+
+## Wazuh Agent Deployment
+
+Wazuh agents were deployed to the Windows and Kali Linux endpoints so that security telemetry from each system could be collected and monitored centrally by the Wazuh server.
+
+### Agent Architecture
+
+The deployment followed this model:
+
+```text
+                    Wazuh Server
+                         │
+              Centralized Monitoring
+                         │
+             ┌───────────┴───────────┐
+             │                       │
+             ▼                       ▼
+      Windows Endpoint         Kali Linux
+       Wazuh Agent             Wazuh Agent
+             │                       │
+             └───────────┬───────────┘
+                         │
+                  Security Telemetry
+```
+
+### Windows Agent
+
+### Kali Linux Agent
+
+### Agent Verification
