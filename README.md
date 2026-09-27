@@ -1,105 +1,168 @@
 # Wazuh SIEM & Security Monitoring Lab
 
-A hands-on cybersecurity lab built to deploy and validate Wazuh for endpoint monitoring, file integrity monitoring, network reconnaissance, controlled SMB authentication attack simulation, security-event analysis, detection, and investigation.
+A hands-on security monitoring laboratory demonstrating the deployment and use of Wazuh as a Security Information and Event Management (SIEM) and Host-Based Intrusion Detection System (HIDS).
 
-> **Portfolio note:** This repository documents work performed in an isolated virtual lab. IP addresses, usernames, host-specific identifiers, and other environment-specific information shown in the public documentation are sanitized where appropriate.
+The project uses isolated virtual machines to generate controlled security events, collect endpoint telemetry, detect suspicious activity, and investigate resulting alerts.
 
----
+## Project Objectives
 
-## Project Overview
+The laboratory focuses on two primary detection scenarios:
 
-This project documents the deployment and validation of a Wazuh-based security monitoring environment using virtualized Windows and Linux endpoints.
+1. File Integrity Monitoring (FIM)
+2. SMB authentication brute-force detection
 
-The lab was used to explore how security activity moves from:
-
-**Reconnaissance → Attack Activity → Security Telemetry → Detection → Alert → Investigation**
-
-Two primary security-monitoring scenarios were investigated:
-
-1. **Controlled SMB brute-force/authentication attack**
-2. **File Integrity Monitoring (FIM)**
-
-The objective was not simply to deploy Wazuh, but to understand how endpoint and network activity can generate security telemetry that can be collected, correlated, detected, and investigated through a SIEM platform.
+The project also demonstrates Wazuh agent deployment on both Windows and Linux endpoints and the use of Windows security telemetry to support centralized detection and investigation.
 
 ---
 
 ## Lab Architecture
 
-The laboratory environment consisted of:
+The laboratory was built using an isolated virtual network containing a central Wazuh server, monitored Windows and Linux endpoints, and a pfSense network gateway.
 
-- Wazuh Server
-- Wazuh Indexer
-- Wazuh Manager
-- Wazuh Dashboard
-- Windows 10 endpoint with Wazuh Agent
-- Kali Linux endpoint with Wazuh Agent
-- pfSense network environment
-- Isolated virtual network
+### Lab Components
 
-### Public Documentation Addressing
+| Component | Role | Platform |
+|---|---|---|
+| Wazuh Server | Centralized security monitoring, event analysis, and dashboard | Ubuntu Server |
+| Windows Endpoint | Wazuh agent and controlled security-testing target | Windows 10 |
+| Kali Linux | Wazuh agent and controlled security-testing source | Kali Linux |
+| pfSense | Network gateway and DHCP | pfSense |
 
-IP addresses shown in public documentation are sanitized representations of the original lab environment.
+### Architecture
 
-| Component | Documentation Address |
-|---|---|
-| pfSense | `10.10.10.1` |
-| Wazuh Server | `10.10.10.10` |
-| Windows Endpoint | `10.10.10.20` |
-| Kali Linux | `10.10.10.30` |
-| Lab Network | `10.10.10.0/24` |
-
-> These addresses are used only for public documentation and do not represent the original lab addressing.
-
+```text
+                         ┌─────────────────────┐
+                         │       pfSense       │
+                         │   Gateway / DHCP    │
+                         └──────────┬──────────┘
+                                    │
+                         Isolated Lab Network
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              │                     │                     │
+              ▼                     ▼                     ▼
+     ┌────────────────┐    ┌────────────────┐    ┌────────────────┐
+     │  Wazuh Server  │    │ Windows        │    │ Kali Linux     │
+     │                │    │ Endpoint       │    │                │
+     │ • Indexer      │    │                │    │ • Wazuh Agent  │
+     │ • Manager      │    │ • Wazuh Agent  │    │ • Test Source  │
+     │ • Dashboard    │    │ • Test Target  │    │                │
+     └────────────────┘    └────────────────┘    └────────────────┘
+```
 ---
 
 ## Technologies & Tools
 
+The laboratory used the following technologies and security tools.
+
 ### Security Monitoring
 
-- Wazuh SIEM
-- Wazuh Manager
-- Wazuh Indexer
-- Wazuh Dashboard
-- Wazuh Agent
-- File Integrity Monitoring (FIM)
-- Windows security-event monitoring
+- **Wazuh** — Security monitoring and detection platform
+- **Wazuh Dashboard** — Security event visualization and investigation
+- **Wazuh Indexer** — Storage and indexing of security data
+- **Wazuh Server/Manager** — Event processing and detection-rule evaluation
+- **Wazuh Agent** — Endpoint telemetry collection
+- **File Integrity Monitoring (FIM)** — Detection of monitored file changes
 
 ### Operating Systems
 
-- Ubuntu Server
-- Windows 10
-- Kali Linux
-- pfSense
+- **Ubuntu Server** — Wazuh server platform
+- **Windows 10** — Monitored endpoint and controlled testing target
+- **Kali Linux** — Security-testing system and monitored Linux endpoint
+
+### Network Infrastructure
+
+- **pfSense** — Lab gateway and DHCP
+- **Virtualized isolated network** — Laboratory network environment
 
 ### Security Testing
 
-- Nmap
-- NetExec
-- SMB
-- Windows authentication telemetry
+- **Nmap** — Network reconnaissance and service discovery
+- **NetExec** — SMB authentication testing
+- **PowerShell** — Windows endpoint administration and controlled file operations
+- ---
 
-### Virtualization
+## Project Workflow
 
-- Virtualized laboratory environment
-- Isolated network segmentation
-
----
-
-# Security Monitoring Scenario 1 — SMB Brute-Force Attack
-
-## Objective
-
-A controlled SMB authentication attack was simulated against the Windows endpoint to examine how repeated authentication attempts generate security telemetry and how Wazuh can be used to detect and investigate the resulting activity.
-
-The attack was performed only within the isolated laboratory environment.
-
----
-
-## Phase 1 — Network Reconnaissance
-
-Nmap was used to identify services exposed by the Windows endpoint.
-
-The reconnaissance identified:
+The project follows a practical security monitoring workflow:
 
 ```text
-TCP/445 — Microsoft-DS / SMB
+Reconnaissance
+      ↓
+Security Activity
+      ↓
+Endpoint Telemetry
+      ↓
+Wazuh Collection
+      ↓
+Detection & Correlation
+      ↓
+Security Alert
+      ↓
+Investigation
+      ↓
+Security Findings
+```
+
+---
+
+## Detection Scenarios
+
+The laboratory contains two controlled security-monitoring scenarios designed to demonstrate different Wazuh detection capabilities.
+
+### Scenario 1 — File Integrity Monitoring
+
+The first scenario demonstrates File Integrity Monitoring (FIM) on the Windows endpoint.
+
+A monitored directory was configured and controlled file operations were performed to generate file creation, modification, and deletion events.
+
+The purpose of this exercise was to demonstrate how Wazuh detects changes to monitored files and reports the resulting security events.
+
+Detection flow:
+
+```text
+File Change
+     ↓
+Wazuh Syscheck
+     ↓
+Integrity Check
+     ↓
+Security Event
+     ↓
+Wazuh Detection
+     ↓
+Dashboard Alert
+```
+
+### Scenario 2 — SMB Authentication Brute-Force Detection
+
+The second scenario demonstrates the detection of repeated SMB authentication failures against the Windows endpoint.
+
+Network reconnaissance was first performed from the Kali Linux testing system to identify whether the SMB service was accessible on the target.
+
+Because the Windows endpoint used in the laboratory did not provide an RDP server, SMB was used as the authentication-testing protocol instead.
+
+Controlled authentication attempts were then generated against the SMB service. The resulting failed authentication activity was recorded by Windows security logging and collected by Wazuh.
+
+Repeated authentication failures eventually resulted in an account lockout event, providing additional security telemetry for detection and investigation.
+
+Detection flow:
+
+```text
+SMB Reconnaissance
+        ↓
+SMB Service Identified
+        ↓
+Controlled Authentication Attempts
+        ↓
+Windows Event ID 4625
+        ↓
+Repeated Authentication Failures
+        ↓
+Account Lockout
+        ↓
+Windows Event ID 4740
+        ↓
+Wazuh Detection & Correlation
+        ↓
+Security Alert
