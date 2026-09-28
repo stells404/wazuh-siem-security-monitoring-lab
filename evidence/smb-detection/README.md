@@ -4,9 +4,9 @@ This directory contains sanitized evidence from the controlled SMB authenticatio
 
 ## Evidence
 
-- **Nmap SMB discovery:** Documents the identification of SMB on TCP/445.
-- **Wazuh authentication dashboard:** Shows the recorded authentication failures and successes.
-- **Wazuh detection events:** Shows the relevant Wazuh detection and correlation rules.
+- [Nmap SMB discovery](nmap-smb-discovery.png): Documents the identification of SMB on TCP/445.
+- [Wazuh authentication dashboard](Wazuh%20authentication%20dashboard.png): Shows the recorded authentication failures and successes.
+- [Wazuh detection events](Wazuh%20detection%20events.png): Shows the relevant Wazuh detection and correlation rules.
 
 ## Security and Evidence Notes
 

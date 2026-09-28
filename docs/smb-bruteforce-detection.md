@@ -53,7 +53,7 @@ The reconnaissance phase established that SMB was available on the Windows targe
 
 Because the Windows 10 Home endpoint did not provide the RDP service required for the planned remote-access approach, SMB was selected for the controlled authentication test.
 
-An initial Hydra-based approach was attempted but was not successful in this lab environment. The testing was subsequently performed using NetExec against the SMB service.
+An initial Hydra-based approach was attempted but failed because of SMB dialect incompatibility with the Windows 10 target. The testing was then performed using NetExec against the SMB service.
 
 The authentication attempts were intentionally conducted within the isolated laboratory environment to generate Windows authentication telemetry for Wazuh monitoring.
 
@@ -69,6 +69,7 @@ The original laboratory command is not reproduced here because it contained envi
 netexec smb 192.0.2.20 -u lab-user -p [REDACTED]
 ```
 The address and username shown above are sanitized documentation values and were not the original values used during testing.
+
 ## 3. Windows Security Telemetry
 
 The repeated SMB authentication attempts generated Windows security telemetry on the target endpoint.
@@ -109,6 +110,7 @@ Windows Event ID 4740
 Wazuh collection and detection
 ```
 The Event ID sequence is documented from the laboratory exercise and presentation evidence. Original Event Viewer screenshots for Events 4625 and 4740 are not included in the public repository.
+
 ## 4. Wazuh Detection & Correlation
 
 The Windows authentication events were collected by the Wazuh agent and processed by the Wazuh detection engine.
@@ -154,6 +156,7 @@ Rule 60115 — Account locked out
         ↓
 Wazuh security alert
 ```
+
 ## 5. Investigation & Findings
 
 The Wazuh alerts were analyzed as part of the controlled SMB authentication exercise to establish the sequence of activity and its observable security impact.
@@ -179,6 +182,7 @@ Event ID 4740
     ↓
 Wazuh detection and correlation
 ```
+
 The testing demonstrated that repeated authentication failures generated security telemetry on the Windows endpoint and that Wazuh was able to process the resulting events.
 
 ## Investigation Findings

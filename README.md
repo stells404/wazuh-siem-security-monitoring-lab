@@ -4,6 +4,8 @@ A hands-on security monitoring laboratory demonstrating the deployment and use o
 
 The project uses isolated virtual machines to generate controlled security events, collect endpoint telemetry, detect suspicious activity, and investigate resulting alerts.
 
+The original presentation file is not included in this public repository; the documentation below records its lab setup, demonstrations, findings, and future work.
+
 ## Project Objectives
 
 The laboratory focuses on two primary detection scenarios:
@@ -12,6 +14,14 @@ The laboratory focuses on two primary detection scenarios:
 2. SMB authentication brute-force detection
 
 The project also demonstrates Wazuh agent deployment on both Windows and Linux endpoints and the use of Windows security telemetry to support centralized detection and investigation.
+
+## SIEM and IDS Concepts
+
+| Capability | Role in this lab |
+|---|---|
+| SIEM | Wazuh centrally collects endpoint events, correlates activity, and presents alerts. |
+| HIDS | Wazuh agents monitor endpoint activity; FIM is the host-based detection example in this lab. |
+| NIDS | Not implemented; Suricata integration is identified as future work. |
 
 ---
 
@@ -23,9 +33,9 @@ The laboratory was built using an isolated virtual network containing a central 
 
 | Component | Role | Platform |
 |---|---|---|
-| Wazuh Server | Centralized security monitoring, event analysis, and dashboard | Ubuntu Server |
-| Windows Endpoint | Wazuh agent and controlled security-testing target | Windows 10 |
-| Kali Linux | Wazuh agent and controlled security-testing source | Kali Linux |
+| Wazuh Server | Centralized security monitoring, event analysis, and dashboard | Ubuntu Server 22.04 |
+| Windows Endpoint | Wazuh agent and controlled security-testing target | Windows 10 Home |
+| Kali Linux | Wazuh agent and controlled security-testing source | Kali GNU/Linux 2026.2 |
 | pfSense | Network gateway and DHCP | pfSense |
 
 ### Architecture
@@ -168,6 +178,24 @@ Wazuh Detection & Correlation
 Security Alert
 ```
 
+### Demonstration Results
+
+| Scenario | Documented result |
+|---|---|
+| File Integrity Monitoring | File creation, modification, and deletion were detected by Wazuh `syscheck`. [Dashboard evidence](evidence/fim/fim-monitoring-dashboard.png) |
+| SMB authentication testing | The dashboard recorded 15 failed logons and 0 successes; repeated failures resulted in an account lockout. The report records rules 60122, 60115, and 60204. |
+
+The SMB report documents Windows Event IDs 4625 and 4740. Original Event Viewer screenshots for those events are not included in this repository; the event sequence is documented from the lab presentation.
+
+### Reports and Evidence
+
+- [FIM technical report](docs/file-integrity-monitoring.md)
+- [SMB detection report](docs/smb-bruteforce-detection.md)
+- [Nmap SMB discovery](evidence/smb-detection/nmap-smb-discovery.png)
+- [SMB authentication dashboard](evidence/smb-detection/Wazuh%20authentication%20dashboard.png)
+- [Wazuh detection events](evidence/smb-detection/Wazuh%20detection%20events.png)
+- [Lab architecture](evidence/architecture/Architecture.png)
+
 ---
 
 ## Wazuh Agent Deployment
@@ -209,11 +237,6 @@ The dashboard showed two active agents: one Windows endpoint and one Kali Linux 
 - [Agent overview](evidence/agent-deployment/Wazuh%20agent%20overview.png)
 - [Kali endpoint details](evidence/agent-deployment/Endpoint%20agent%20details.png)
 
-### Detailed Detection Reports
-
-- [File Integrity Monitoring (FIM)](docs/file-integrity-monitoring.md)
-- [SMB brute-force detection](docs/smb-bruteforce-detection.md)
-
 ---
 
 ## File Integrity Monitoring (FIM)
@@ -247,3 +270,11 @@ Wazuh Detection
         ↓
 Dashboard Alert
 ```
+
+## Future Work
+
+The presentation identifies the following extensions; they were not implemented in this lab:
+
+- Integrate Suricata to add network-based intrusion detection.
+- Develop a custom Wazuh detection rule.
+- Configure Wazuh Active Response for automated containment.

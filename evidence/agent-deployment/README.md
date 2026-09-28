@@ -4,8 +4,8 @@ This directory documents endpoint agent deployment and agent status verification
 
 ## Evidence
 
-- **Wazuh agent overview:** Documents the agent status displayed in the Wazuh dashboard.
-- **Endpoint agent details:** Provides supporting evidence of an enrolled endpoint agent.
+- [Wazuh agent overview](Wazuh%20agent%20overview.png): Documents the active Windows and Kali agents.
+- [Endpoint agent details](Endpoint%20agent%20details.png): Provides supporting evidence of the enrolled Kali agent.
 
 ## Security and Evidence Notes
 
