@@ -1,44 +1,20 @@
-# Wazuh SIEM & Security Monitoring Lab
+# Wazuh SIEM and Security Monitoring Lab
 
-A hands-on security monitoring laboratory demonstrating the deployment and use of Wazuh as a Security Information and Event Management (SIEM) and Host-Based Intrusion Detection System (HIDS).
+A hands-on portfolio lab using Wazuh to monitor Windows and Kali Linux endpoints in an isolated virtual network. The project demonstrates endpoint enrollment, File Integrity Monitoring (FIM), SMB authentication testing, and centralized investigation of Windows security events.
 
-The project uses isolated virtual machines to generate controlled security events, collect endpoint telemetry, detect suspicious activity, and investigate resulting alerts.
+The original presentation is not included in this public repository. This repository documents the lab work and links to the available evidence.
 
-The original presentation file is not included in this public repository; the documentation below records its lab setup, demonstrations, findings, and future work.
+## Project at a Glance
 
-## Project Objectives
-
-The laboratory focuses on two primary detection scenarios:
-
-1. File Integrity Monitoring (FIM)
-2. SMB authentication brute-force detection
-
-The project also demonstrates Wazuh agent deployment on both Windows and Linux endpoints and the use of Windows security telemetry to support centralized detection and investigation.
-
-## SIEM and IDS Concepts
-
-| Capability | Role in this lab |
-|---|---|
-| SIEM | Wazuh centrally collects endpoint events, correlates activity, and presents alerts. |
-| HIDS | Wazuh agents monitor endpoint activity; FIM is the host-based detection example in this lab. |
-| NIDS | Not implemented; Suricata integration is identified as future work. |
-
----
+- **Monitoring platform:** Wazuh server, manager, indexer, and dashboard
+- **Endpoints:** Windows 10 Home and Kali GNU/Linux 2026.2
+- **Network:** Isolated virtual lab using pfSense for gateway and DHCP
+- **Demonstrations:** File creation, modification, and deletion detection; controlled SMB authentication failures and account lockout
+- **Purpose:** Show how endpoint activity becomes centralized security telemetry that can be investigated in Wazuh
 
 ## Lab Architecture
 
-The laboratory was built using an isolated virtual network containing a central Wazuh server, monitored Windows and Linux endpoints, and a pfSense network gateway.
-
-### Lab Components
-
-| Component | Role | Platform |
-|---|---|---|
-| Wazuh Server | Centralized security monitoring, event analysis, and dashboard | Ubuntu Server 22.04 |
-| Windows Endpoint | Wazuh agent and controlled security-testing target | Windows 10 Home |
-| Kali Linux | Wazuh agent and controlled security-testing source | Kali GNU/Linux 2026.2 |
-| pfSense | Network gateway and DHCP | pfSense |
-
-### Architecture
+The lab used a Wazuh server on Ubuntu Server 22.04, a Windows endpoint, Kali Linux, and a pfSense gateway. Addressing details are omitted from this public overview.
 
 ```text
                          ┌─────────────────────┐
@@ -53,240 +29,69 @@ The laboratory was built using an isolated virtual network containing a central 
               ▼                     ▼                     ▼
      ┌────────────────┐    ┌────────────────┐    ┌────────────────┐
      │  Wazuh Server  │    │ Windows        │    │ Kali Linux     │
-     │                │    │ Endpoint       │    │                │
-     │ • Indexer      │    │                │    │ • Wazuh Agent  │
-     │ • Manager      │    │ • Wazuh Agent  │    │ • Test Source  │
-     │ • Dashboard    │    │ • Test Target  │    │                │
+     │  Ubuntu Server │    │ Endpoint       │    │ Endpoint       │
+     │ 22.04          │    │ Wazuh Agent    │    │ Wazuh Agent    │
+     │ Manager,       │    │ Test Target    │    │ Test Source    │
+     │ Indexer,       │    │                │    │                │
+     │ Dashboard      │    │                │    │                │
      └────────────────┘    └────────────────┘    └────────────────┘
 ```
----
 
-## Technologies & Tools
+[View the lab architecture evidence](evidence/architecture/Architecture.png).
 
-The laboratory used the following technologies and security tools.
+## What the Lab Demonstrates
 
-### Security Monitoring
+### Endpoint Enrollment
 
-- **Wazuh** — Security monitoring and detection platform
-- **Wazuh Dashboard** — Security event visualization and investigation
-- **Wazuh Indexer** — Storage and indexing of security data
-- **Wazuh Server/Manager** — Event processing and detection-rule evaluation
-- **Wazuh Agent** — Endpoint telemetry collection
-- **File Integrity Monitoring (FIM)** — Detection of monitored file changes
+Windows and Kali agents were enrolled in Wazuh. The dashboard overview shows both agents active at the time of capture; the endpoint details screenshot provides additional Kali agent information.
 
-### Operating Systems
-
-- **Ubuntu Server** — Wazuh server platform
-- **Windows 10** — Monitored endpoint and controlled testing target
-- **Kali Linux** — Security-testing system and monitored Linux endpoint
-
-### Network Infrastructure
-
-- **pfSense** — Lab gateway and DHCP
-- **Virtualized isolated network** — Laboratory network environment
-
-### Security Testing
-
-- **Nmap** — Network reconnaissance and service discovery
-- **NetExec** — SMB authentication testing
-- **PowerShell** — Windows endpoint administration and controlled file operations
-- ---
-
-## Project Workflow
-
-The project follows a practical security monitoring workflow:
-
-```text
-Reconnaissance
-      ↓
-Security Activity
-      ↓
-Endpoint Telemetry
-      ↓
-Wazuh Collection
-      ↓
-Detection & Correlation
-      ↓
-Security Alert
-      ↓
-Investigation
-      ↓
-Security Findings
-```
-
----
-
-## Detection Scenarios
-
-The laboratory contains two controlled security-monitoring scenarios designed to demonstrate different Wazuh detection capabilities.
-
-### Scenario 1 — File Integrity Monitoring
-
-The first scenario demonstrates File Integrity Monitoring (FIM) on the Windows endpoint.
-
-A monitored directory was configured and controlled file operations were performed to generate file creation, modification, and deletion events.
-
-The purpose of this exercise was to demonstrate how Wazuh detects changes to monitored files and reports the resulting security events.
-
-Detection flow:
-
-```text
-File Change
-     ↓
-Wazuh Syscheck
-     ↓
-Integrity Check
-     ↓
-Security Event
-     ↓
-Wazuh Detection
-     ↓
-Dashboard Alert
-```
-
-### Scenario 2 — SMB Authentication Brute-Force Detection
-
-The second scenario demonstrates the detection of repeated SMB authentication failures against the Windows endpoint.
-
-Network reconnaissance was first performed from the Kali Linux testing system to identify whether the SMB service was accessible on the target.
-
-Because the Windows endpoint used in the laboratory did not provide an RDP server, SMB was used as the authentication-testing protocol instead.
-
-Controlled authentication attempts were then generated against the SMB service. The resulting failed authentication activity was recorded by Windows security logging and collected by Wazuh.
-
-Repeated authentication failures eventually resulted in an account lockout event, providing additional security telemetry for detection and investigation.
-
-Detection flow:
-
-```text
-SMB Reconnaissance
-        ↓
-SMB Service Identified
-        ↓
-Controlled Authentication Attempts
-        ↓
-Windows Event ID 4625
-        ↓
-Repeated Authentication Failures
-        ↓
-Account Lockout
-        ↓
-Windows Event ID 4740
-        ↓
-Wazuh Detection & Correlation
-        ↓
-Security Alert
-```
-
-### Demonstration Results
-
-| Scenario | Documented result |
-|---|---|
-| File Integrity Monitoring | File creation, modification, and deletion were detected by Wazuh `syscheck`. [Dashboard evidence](evidence/fim/fim-monitoring-dashboard.png) |
-| SMB authentication testing | The dashboard recorded 15 failed logons and 0 successes; repeated failures resulted in an account lockout. The report records rules 60122, 60115, and 60204. |
-
-The SMB report documents Windows Event IDs 4625 and 4740. Original Event Viewer screenshots for those events are not included in this repository; the event sequence is documented from the lab presentation.
-
-### Evidence Coverage and Gaps
-
-The repository includes an architecture diagram, active-agent screenshots, a FIM dashboard screenshot, an Nmap SMB discovery screenshot, and Wazuh dashboards for authentication activity and detection events. NetExec console results are summarized in the SMB detection report; the console screenshot is not included.
-
-The following source artifacts are not included:
-
-- A separate Wazuh server installation or running-status capture.
-- FIM configuration or agent-log screenshots.
-- Windows Event Viewer screenshots for Events 4625 and 4740.
-- NetExec console screenshot.
-- The original PowerPoint presentation.
-
-### Reports and Evidence
-
-- [FIM technical report](docs/file-integrity-monitoring.md)
-- [SMB detection report](docs/smb-bruteforce-detection.md)
-- [Nmap SMB discovery](evidence/smb-detection/nmap-smb-discovery.png)
-- [SMB authentication dashboard](evidence/smb-detection/Wazuh%20authentication%20dashboard.png)
-- [Wazuh detection events](evidence/smb-detection/Wazuh%20detection%20events.png)
-- [Lab architecture](evidence/architecture/Architecture.png)
-
----
-
-## Wazuh Agent Deployment
-
-Wazuh agents were deployed to the Windows and Kali Linux endpoints so that security telemetry from each system could be collected and monitored centrally by the Wazuh server.
-
-### Agent Architecture
-
-The deployment followed this model:
-
-```text
-                    Wazuh Server
-                         │
-              Centralized Monitoring
-                         │
-             ┌───────────┴───────────┐
-             │                       │
-             ▼                       ▼
-      Windows Endpoint         Kali Linux
-       Wazuh Agent             Wazuh Agent
-             │                       │
-             └───────────┬───────────┘
-                         │
-                  Security Telemetry
-```
-
-### Windows Agent
-
-The Windows 10 endpoint was enrolled through the Wazuh dashboard's **Deploy new agent** workflow. The generated PowerShell command was run as Administrator, and the Wazuh agent service was started with `NET START WazuhSvc`. The manager address and other lab-specific values are omitted here.
-
-### Kali Linux Agent
-
-The Kali endpoint was enrolled using the Linux **DEB amd64** package option. The package was installed with the manager setting supplied during enrollment, then the `wazuh-agent` service was enabled and started. The manager address and generated download details are omitted here.
-
-### Agent Verification
-
-The dashboard showed two active agents: one Windows endpoint and one Kali Linux endpoint. The Kali details screenshot shows Kali GNU/Linux 2026.2 with Wazuh agent version `v4.14.5`. The screenshots document the status at capture time:
-
+- [Agent deployment notes](evidence/agent-deployment/README.md)
 - [Agent overview](evidence/agent-deployment/Wazuh%20agent%20overview.png)
 - [Kali endpoint details](evidence/agent-deployment/Endpoint%20agent%20details.png)
 
----
+### File Integrity Monitoring
 
-## File Integrity Monitoring (FIM)
+Wazuh `syscheck` monitored `C:\Users\Public\monitored`. Controlled file creation, modification, and deletion were detected and shown in the dashboard.
 
-File Integrity Monitoring was used to demonstrate Wazuh's ability to detect changes to files on the monitored Windows endpoint.
+- [FIM technical report](docs/file-integrity-monitoring.md)
+- [FIM evidence notes](evidence/fim/README.md)
+- [FIM dashboard results](evidence/fim/fim-monitoring-dashboard.png)
 
-The exercise used Wazuh's `syscheck` component to monitor a designated directory. Controlled file operations were then performed to generate different types of file-integrity events.
+### SMB Authentication Monitoring
 
-### FIM Objective
+Nmap confirmed SMB on TCP/445. After an initial Hydra attempt was incompatible with the target’s SMB dialect, NetExec was used to generate controlled authentication failures with the lab-created `passwords.txt` wordlist. The console output shows failed logons followed by account-lockout responses. Separately, Wazuh dashboard evidence documents 15 authentication failures, 0 successes, and related detection rules.
 
-The objective was to verify that Wazuh could detect and report:
+The account lockout was a Windows endpoint response. NetExec’s output is evidence of the authentication test; the Wazuh dashboards are the evidence of centralized monitoring and detection.
 
-- File creation
-- File modification
-- File deletion
+- [SMB detection report](docs/smb-bruteforce-detection.md)
+- [SMB evidence index](evidence/smb-detection/README.md)
+- [Nmap SMB discovery](evidence/smb-detection/nmap-smb-discovery.png)
+- [NetExec setup capture](evidence/smb-detection/netexec-setup.png)
+- [NetExec SMB test output](evidence/smb-detection/netexec-smb-authentication.png)
+- [Wazuh authentication dashboard](evidence/smb-detection/Wazuh%20authentication%20dashboard.png)
+- [Wazuh detection events](evidence/smb-detection/Wazuh%20detection%20events.png)
 
-### FIM Detection Workflow
+## Key Findings
 
-```text
-Monitored Directory
-        ↓
-File Activity
-        ↓
-Wazuh Syscheck
-        ↓
-Integrity Monitoring
-        ↓
-Security Event
-        ↓
-Wazuh Detection
-        ↓
-Dashboard Alert
-```
+- Wazuh reported the three controlled FIM actions: file added, modified, and deleted.
+- The SMB test output showed failed logons and subsequent account-lockout responses.
+- The Wazuh dashboard reported 15 authentication failures and 0 successes, with rules 60122, 60115, and 60204 associated with the activity.
+- The lab illustrates the distinction between endpoint response (Windows account lockout) and SIEM detection (Wazuh event collection, rules, and dashboards).
 
-## Future Work
+## Scope and Next Steps
 
-The presentation identifies the following extensions; they were not implemented in this lab:
+This project demonstrates host-based monitoring and SIEM investigation. It does not implement network-based intrusion detection or automated containment.
 
-- Integrate Suricata to add network-based intrusion detection.
-- Develop a custom Wazuh detection rule.
-- Configure Wazuh Active Response for automated containment.
+Evidence not currently included consists of a Wazuh server installation or running-status capture, separate FIM configuration and agent-log screenshots, and original Windows Event Viewer captures for Events 4625 and 4740. The reports describe these parts of the lab and identify where direct screenshots are unavailable.
+
+Future work identified in the presentation:
+
+- Integrate Suricata for network-based IDS coverage.
+- Create a custom Wazuh detection rule.
+- Configure Wazuh Active Response for an approved automated response.
+
+## Repository Guide
+
+- `docs/file-integrity-monitoring.md` — FIM setup, actions, results, and analysis
+- `docs/smb-bruteforce-detection.md` — SMB test method, Windows telemetry, Wazuh detection, and findings
+- `evidence/` — Architecture, agent deployment, FIM, and SMB screenshots with evidence notes
