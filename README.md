@@ -196,9 +196,23 @@ The deployment followed this model:
 
 ### Windows Agent
 
+The Windows 10 endpoint was enrolled through the Wazuh dashboard's **Deploy new agent** workflow. The generated PowerShell command was run as Administrator, and the Wazuh agent service was started with `NET START WazuhSvc`. The manager address and other lab-specific values are omitted here.
+
 ### Kali Linux Agent
 
+The Kali endpoint was enrolled using the Linux **DEB amd64** package option. The package was installed with the manager setting supplied during enrollment, then the `wazuh-agent` service was enabled and started. The manager address and generated download details are omitted here.
+
 ### Agent Verification
+
+The dashboard showed two active agents: one Windows endpoint and one Kali Linux endpoint. The screenshots document the status at capture time:
+
+- [Agent overview](evidence/agent-deployment/Wazuh%20agent%20overview.png)
+- [Kali endpoint details](evidence/agent-deployment/Endpoint%20agent%20details.png)
+
+### Detailed Detection Reports
+
+- [File Integrity Monitoring (FIM)](docs/file-integrity-monitoring.md)
+- [SMB brute-force detection](docs/smb-bruteforce-detection.md)
 
 ---
 
@@ -232,3 +246,4 @@ Security Event
 Wazuh Detection
         ↓
 Dashboard Alert
+```
