@@ -5,6 +5,8 @@ This directory contains sanitized evidence from the controlled SMB authenticatio
 ## Evidence
 
 - [Nmap SMB discovery](nmap-smb-discovery.png): Documents the identification of SMB on TCP/445.
+- [NetExec setup capture](netexec-setup.png): Shows first-run tool initialization.
+- [NetExec SMB test output](netexec-smb-authentication.png): Shows failed-logon responses followed by account-lockout responses.
 - [Wazuh authentication dashboard](Wazuh%20authentication%20dashboard.png): Shows the recorded authentication failures and successes.
 - [Wazuh detection events](Wazuh%20detection%20events.png): Shows the relevant Wazuh detection and correlation rules.
 
@@ -13,7 +15,7 @@ This directory contains sanitized evidence from the controlled SMB authenticatio
 - Screenshots intended for public release must be reviewed and sanitized to remove environment-specific IP addresses, hostnames, and other unnecessary identifying details.
 - Sanitized screenshots preserve the observed evidence; they do not substitute fictional results for original observations.
 - Windows Event IDs 4625 and 4740 are documented in the technical report. Original Event Viewer screenshots for these events are not available.
-- The SMB report summarizes the NetExec authentication-test output. The console screenshot is not included in this public evidence set.
+- NetExec output documents the authentication tool's response; the Wazuh dashboards document centralized monitoring and detection.
 - The original presentation is not included in this directory.
 
 ## Scope
