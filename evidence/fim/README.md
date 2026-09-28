@@ -11,7 +11,7 @@ The test involved controlled file creation, modification, and deletion to examin
 ## Evidence
 
 - [FIM monitoring results](fim-monitoring-dashboard.png): Dashboard evidence of file integrity activity recorded by Wazuh.
-- Separate file-operation logs and Windows Event Viewer screenshots are not included; the dashboard image is the available FIM evidence.
+- The dashboard image is the available FIM result evidence. Separate file-operation logs, FIM configuration or agent-log screenshots, and Windows Event Viewer screenshots are not included.
 
 ## Security and Evidence Notes
 

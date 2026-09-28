@@ -187,6 +187,18 @@ Security Alert
 
 The SMB report documents Windows Event IDs 4625 and 4740. Original Event Viewer screenshots for those events are not included in this repository; the event sequence is documented from the lab presentation.
 
+### Evidence Coverage and Gaps
+
+The repository includes an architecture diagram, active-agent screenshots, a FIM dashboard screenshot, an Nmap SMB discovery screenshot, and Wazuh dashboards for authentication activity and detection events.
+
+The following source artifacts are not included:
+
+- A separate Wazuh server installation or running-status capture.
+- FIM configuration or agent-log screenshots.
+- Windows Event Viewer screenshots for Events 4625 and 4740.
+- Raw NetExec command output.
+- The original PowerPoint presentation.
+
 ### Reports and Evidence
 
 - [FIM technical report](docs/file-integrity-monitoring.md)
@@ -232,7 +244,7 @@ The Kali endpoint was enrolled using the Linux **DEB amd64** package option. The
 
 ### Agent Verification
 
-The dashboard showed two active agents: one Windows endpoint and one Kali Linux endpoint. The screenshots document the status at capture time:
+The dashboard showed two active agents: one Windows endpoint and one Kali Linux endpoint. The Kali details screenshot shows Kali GNU/Linux 2026.2 with Wazuh agent version `v4.14.5`. The screenshots document the status at capture time:
 
 - [Agent overview](evidence/agent-deployment/Wazuh%20agent%20overview.png)
 - [Kali endpoint details](evidence/agent-deployment/Endpoint%20agent%20details.png)
