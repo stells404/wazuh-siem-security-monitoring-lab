@@ -154,3 +154,56 @@ Rule 60115 — Account locked out
         ↓
 Wazuh security alert
 ```
+## 5. Investigation & Findings
+
+The Wazuh alerts were analyzed as part of the controlled SMB authentication exercise to establish the sequence of activity and its observable security impact.
+
+### Observed Activity
+
+The documented activity followed this sequence:
+
+```text
+Kali Linux
+    ↓
+SMB authentication attempts
+    ↓
+Windows authentication failures
+    ↓
+Event ID 4625
+    ↓
+Repeated failures
+    ↓
+Account lockout
+    ↓
+Event ID 4740
+    ↓
+Wazuh detection and correlation
+```
+The testing demonstrated that repeated authentication failures generated security telemetry on the Windows endpoint and that Wazuh was able to process the resulting events.
+
+## Investigation Findings
+### Finding 1 — SMB was exposed on the Windows endpoint
+
+Nmap reconnaissance confirmed that TCP/445 was open, establishing SMB as the service used for the controlled authentication test.
+
+### Finding 2 — Repeated authentication failures generated Windows security telemetry
+
+The documented Event ID 4625 activity showed that unsuccessful authentication attempts were recorded by Windows.
+
+### Finding 3 — Repeated failures resulted in account lockout
+
+The documented Event ID 4740 event showed that the repeated authentication attempts triggered the Windows account-lockout control.
+
+### Finding 4 — Wazuh correlated the authentication activity
+
+Wazuh detected the authentication failures and correlated the repeated activity using its Windows authentication detection rules.
+
+### Finding 5 — The activity produced measurable security impact
+
+The account lockout demonstrated an observable defensive response on the Windows endpoint. The Wazuh dashboard also documented 15 authentication failures and 0 authentication successes during the detection exercise.
+
+## Security Significance
+
+The exercise demonstrated the complete monitoring path from network reconnaissance and controlled authentication activity to endpoint telemetry, Wazuh detection, correlation, and security alerting.
+
+The results show how individual authentication failures can become a higher-level security finding when the events are analyzed as a sequence rather than as isolated log entries.
