@@ -182,23 +182,23 @@ Wazuh detection and correlation
 The testing demonstrated that repeated authentication failures generated security telemetry on the Windows endpoint and that Wazuh was able to process the resulting events.
 
 ## Investigation Findings
-### Finding 1 — SMB was exposed on the Windows endpoint
+**Finding 1 — SMB was exposed on the Windows endpoint**
 
 Nmap reconnaissance confirmed that TCP/445 was open, establishing SMB as the service used for the controlled authentication test.
 
-### Finding 2 — Repeated authentication failures generated Windows security telemetry
+**Finding 2 — Repeated authentication failures generated Windows security telemetry**
 
 The documented Event ID 4625 activity showed that unsuccessful authentication attempts were recorded by Windows.
 
-### Finding 3 — Repeated failures resulted in account lockout
+**Finding 3 — Repeated failures resulted in account lockout**
 
 The documented Event ID 4740 event showed that the repeated authentication attempts triggered the Windows account-lockout control.
 
-### Finding 4 — Wazuh correlated the authentication activity
+**Finding 4 — Wazuh correlated the authentication activity**
 
 Wazuh detected the authentication failures and correlated the repeated activity using its Windows authentication detection rules.
 
-### Finding 5 — The activity produced measurable security impact
+**Finding 5 — The activity produced measurable security impact**
 
 The account lockout demonstrated an observable defensive response on the Windows endpoint. The Wazuh dashboard also documented 15 authentication failures and 0 authentication successes during the detection exercise.
 
@@ -207,3 +207,61 @@ The account lockout demonstrated an observable defensive response on the Windows
 The exercise demonstrated the complete monitoring path from network reconnaissance and controlled authentication activity to endpoint telemetry, Wazuh detection, correlation, and security alerting.
 
 The results show how individual authentication failures can become a higher-level security finding when the events are analyzed as a sequence rather than as isolated log entries.
+## 6. Defensive Analysis
+
+The SMB authentication exercise demonstrated how endpoint authentication telemetry can be used to identify repeated authentication failures and distinguish individual events from a broader attack pattern.
+
+### What the Detection Demonstrated
+
+The exercise demonstrated that:
+
+- SMB authentication failures generated Windows security telemetry.
+- Wazuh collected the resulting authentication events through the Windows agent.
+- Individual failed-logon events could be detected by Wazuh.
+- Repeated authentication failures could be correlated into a broader security event.
+- The Windows account-lockout control responded after repeated authentication failures.
+- Wazuh presented the resulting activity through its security monitoring dashboard.
+
+### Defensive Controls Observed
+
+Two defensive mechanisms were demonstrated during the exercise:
+
+**Windows account lockout**
+
+Repeated authentication failures resulted in the test account being locked out. This demonstrated a preventive control operating on the endpoint.
+
+**Wazuh detection and correlation**
+
+Wazuh collected the Windows security events and applied detection rules to identify both individual failures and the repeated authentication pattern.
+
+### Security Significance
+
+From a SOC monitoring perspective, a single failed authentication attempt may not provide sufficient context to identify a broader attack pattern.
+
+Correlating repeated authentication failures provides additional context and can help distinguish isolated authentication errors from repeated malicious or unauthorized authentication activity.
+
+In this laboratory exercise, the combination of Windows authentication telemetry and Wazuh correlation provided visibility across the complete detection chain:
+
+```text
+Authentication Activity
+        ↓
+Endpoint Telemetry
+        ↓
+Centralized Collection
+        ↓
+Detection
+        ↓
+Correlation
+        ↓
+Security Alert
+        ↓
+Investigation
+```
+**Limitations and Future Improvements**
+
+The laboratory demonstrated detection and correlation but did not implement automated containment.
+Future improvements identified for the project include:
+- Integrating Suricata to provide network-based IDS capabilities alongside Wazuh's host-based monitoring.
+- Developing custom Wazuh detection rules for tailored security conditions.
+- Configuring Wazuh Active Response to automatically respond to defined malicious activity.
+These are future improvements and were not implemented as part of the documented laboratory exercise.
