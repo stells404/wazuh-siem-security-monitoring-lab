@@ -13,7 +13,8 @@ This directory contains sanitized evidence from the controlled SMB authenticatio
 - Screenshots intended for public release must be reviewed and sanitized to remove environment-specific IP addresses, hostnames, and other unnecessary identifying details.
 - Sanitized screenshots preserve the observed evidence; they do not substitute fictional results for original observations.
 - Windows Event IDs 4625 and 4740 are documented in the technical report. Original Event Viewer screenshots for these events are not available.
-- Raw authentication-testing output and the original presentation are not included in this directory.
+- The SMB report summarizes the NetExec authentication-test output. The console screenshot is not included in this public evidence set.
+- The original presentation is not included in this directory.
 
 ## Scope
 
