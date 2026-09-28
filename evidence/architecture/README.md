@@ -1,13 +1,16 @@
 # Lab Architecture Evidence
 
-This directory contains sanitized documentation of the Wazuh SIEM laboratory architecture.
+This directory documents the virtual network topology used in the Wazuh SIEM laboratory.
 
-## Architecture Overview
+## Lab Components
 
-The laboratory uses an Ubuntu Server host for the Wazuh SIEM platform, a Windows endpoint for security telemetry, Kali Linux for controlled security testing, and pfSense for network routing and DHCP.
+- **Wazuh Server:** Hosts the SIEM components.
+- **Windows endpoint:** Provides endpoint security telemetry and serves as the controlled test target.
+- **Kali Linux:** Provides the Linux environment used for reconnaissance and controlled security testing.
+- **pfSense:** Provides network gateway and DHCP services for the lab.
 
-## Security and Evidence Notes
+## Security and Privacy
 
-- Public evidence must be reviewed and sanitized before publication.
-- Original lab IP addresses, usernames, and unnecessary environment-specific identifiers must not be exposed.
-- Documentation must reflect the actual laboratory configuration.
+- IP addresses and the internal subnet have been redacted from the public architecture image.
+- The published image must preserve the original lab configuration and technical labels.
+- The original, unredacted presentation remains private.
