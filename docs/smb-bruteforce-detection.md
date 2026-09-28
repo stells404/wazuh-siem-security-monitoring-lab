@@ -74,7 +74,7 @@ The address and username shown above are sanitized documentation values and were
 
 The reviewed NetExec output shows the initial SMB authentication attempts returning `STATUS_LOGON_FAILURE`. The test was then repeated; later responses returned `STATUS_ACCOUNT_LOCKED_OUT`. This records the SMB service's responses during the authentication test and is consistent with the Windows account-lockout control being triggered.
 
-The command used the lab-created wordlist `passwords.txt`. The console output documents the authentication test, while the Wazuh dashboards documented separately in this report show the monitoring and detection results. The console screenshot is not included in this public repository.
+The command used the lab-created wordlist `passwords.txt`. The console output documents the authentication test, while the Wazuh dashboards documented separately in this report show the monitoring and detection results. The repository includes two NetExec captures: [first-run setup](../evidence/smb-detection/netexec-setup.png), which shows tool initialization, and [SMB test output](../evidence/smb-detection/netexec-smb-authentication.png), which shows the authentication responses. The test-output capture documents NetExec's responses; Wazuh detection is documented separately by the [authentication dashboard](../evidence/smb-detection/Wazuh%20authentication%20dashboard.png) and [detection events](../evidence/smb-detection/Wazuh%20detection%20events.png).
 
 ## 3. Windows Security Telemetry
 
@@ -141,7 +141,7 @@ The Wazuh dashboard documented:
 Authentication Failures: 15
 Authentication Successes: 0
 ```
-The alert activity included rules 60122, 60115, and 60204.
+The alert activity included rules 60122, 60115, and 60204. The source presentation also records 487 total events on the Windows agent in the Threat Hunting view; that broader event count is distinct from the 15 authentication failures.
 This demonstrated that Wazuh was able to detect both individual failed authentication events and the broader repeated-failure pattern.
 
 ### Detection Sequence
