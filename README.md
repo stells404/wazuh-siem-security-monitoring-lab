@@ -189,14 +189,14 @@ The SMB report documents Windows Event IDs 4625 and 4740. Original Event Viewer 
 
 ### Evidence Coverage and Gaps
 
-The repository includes an architecture diagram, active-agent screenshots, a FIM dashboard screenshot, an Nmap SMB discovery screenshot, and Wazuh dashboards for authentication activity and detection events.
+The repository includes an architecture diagram, active-agent screenshots, a FIM dashboard screenshot, an Nmap SMB discovery screenshot, and Wazuh dashboards for authentication activity and detection events. NetExec console results are summarized in the SMB detection report; the console screenshot is not included.
 
 The following source artifacts are not included:
 
 - A separate Wazuh server installation or running-status capture.
 - FIM configuration or agent-log screenshots.
 - Windows Event Viewer screenshots for Events 4625 and 4740.
-- Raw NetExec command output.
+- NetExec console screenshot.
 - The original PowerPoint presentation.
 
 ### Reports and Evidence
