@@ -70,6 +70,12 @@ netexec smb 192.0.2.20 -u lab-user -p [REDACTED]
 ```
 The address and username shown above are sanitized documentation values and were not the original values used during testing.
 
+### NetExec Output
+
+The reviewed NetExec output shows the initial SMB authentication attempts returning `STATUS_LOGON_FAILURE`. The test was then repeated; later responses returned `STATUS_ACCOUNT_LOCKED_OUT`. This records the SMB service's responses during the authentication test and is consistent with the Windows account-lockout control being triggered.
+
+The command used the lab-created wordlist `passwords.txt`. The console output documents the authentication test, while the Wazuh dashboards documented separately in this report show the monitoring and detection results. The console screenshot is not included in this public repository.
+
 ## 3. Windows Security Telemetry
 
 The repeated SMB authentication attempts generated Windows security telemetry on the target endpoint.
