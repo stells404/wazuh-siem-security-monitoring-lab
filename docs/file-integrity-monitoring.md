@@ -87,6 +87,8 @@ The available evidence shows three file-integrity actions:
 
 The Wazuh dashboard displayed the resulting FIM activity under the `syscheck` rule group.
 
+[View the FIM monitoring dashboard evidence](../evidence/fim/fim-monitoring-dashboard.png).
+
 The documented detection results show that all three controlled file operations were detected.
 
 
